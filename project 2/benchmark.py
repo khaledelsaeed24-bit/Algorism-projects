@@ -324,24 +324,29 @@ def generate_runtime_plot_svg(
 
 
 def main():
-    # 1. Load actual prices and generate stock chart
-    dates, prices = load_price_data("prices.csv")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_file = os.path.join(script_dir, "prices.csv")
+    dates, prices = load_price_data(csv_file)
     sol = max_profit_divide_and_conquer(prices)
+    
+    chart_svg = os.path.join(script_dir, "stock_price_profit.svg")
     generate_stock_chart_svg(
         dates=dates,
         prices=prices,
         buy_day=sol["buy_day"],
         sell_day=sol["sell_day"],
-        filename="stock_price_profit.svg"
+        filename=chart_svg
     )
 
     # 2. Run scaling benchmarks
     benchmarks = run_benchmarks()
-    with open("benchmark_results.json", "w", encoding="utf-8") as f:
+    json_path = os.path.join(script_dir, "benchmark_results.json")
+    with open(json_path, "w", encoding="utf-8") as f:
         json.dump(benchmarks, f, indent=2)
 
     # 3. Generate runtime plot
-    generate_runtime_plot_svg(benchmarks["data"], filename="runtime_comparison.svg")
+    runtime_svg = os.path.join(script_dir, "runtime_comparison.svg")
+    generate_runtime_plot_svg(benchmarks["data"], filename=runtime_svg)
 
     print("\nBenchmark and visualization suite completed successfully!")
 

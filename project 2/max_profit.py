@@ -11,6 +11,7 @@ Supports reading price data via pandas or built-in csv.
 from typing import List, Tuple, Dict, Any, Optional
 import csv
 import math
+import os
 
 try:
     import pandas as pd
@@ -20,11 +21,20 @@ except ImportError:
     HAS_PANDAS = False
 
 
-def load_price_data(csv_path: str) -> Tuple[List[str], List[float]]:
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_CSV_PATH = os.path.join(SCRIPT_DIR, "prices.csv")
+
+
+def load_price_data(csv_path: str = DEFAULT_CSV_PATH) -> Tuple[List[str], List[float]]:
     """
     Loads Date and Close price series from a CSV file.
     Uses pandas if available, falling back to standard csv module.
+    Automatically resolves relative paths against script directory.
     """
+    if not os.path.isabs(csv_path) and not os.path.exists(csv_path):
+        alt_path = os.path.join(SCRIPT_DIR, csv_path)
+        if os.path.exists(alt_path):
+            csv_path = alt_path
     if HAS_PANDAS and pd is not None:
         df = pd.read_csv(csv_path)
         dates = df["Date"].astype(str).tolist()

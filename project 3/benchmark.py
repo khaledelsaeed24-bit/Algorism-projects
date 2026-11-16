@@ -26,7 +26,15 @@ from top_k_words import (
 )
 
 
-def load_corpus(filepath: str = "corpus.txt") -> List[str]:
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DEFAULT_CORPUS_FILE = os.path.join(SCRIPT_DIR, "corpus.txt")
+
+
+def load_corpus(filepath: str = DEFAULT_CORPUS_FILE) -> List[str]:
+    if not os.path.isabs(filepath) and not os.path.exists(filepath):
+        alt_path = os.path.join(SCRIPT_DIR, filepath)
+        if os.path.exists(alt_path):
+            filepath = alt_path
     with open(filepath, "r", encoding="utf-8") as f:
         text = f.read()
     return tokenize_text(text)
@@ -374,12 +382,13 @@ def generate_zipf_plot_svg(
 
 
 def main():
-    tokens = load_corpus("corpus.txt")
+    tokens = load_corpus(DEFAULT_CORPUS_FILE)
     print(f"Loaded corpus with {len(tokens):,} tokens. Unique words: {len(set(tokens)):,}")
 
     # 1. Generate Top-15 words bar chart
     top15 = top_k_min_heap(tokens, 15)
-    generate_barchart_svg(top15, total_tokens=len(tokens), filename="top_k_barchart.svg")
+    barchart_path = os.path.join(SCRIPT_DIR, "top_k_barchart.svg")
+    generate_barchart_svg(top15, total_tokens=len(tokens), filename=barchart_path)
 
     # 2. Benchmark k-scaling
     res_k = benchmark_k_scaling(tokens)
@@ -392,7 +401,8 @@ def main():
         "k_scaling": res_k,
         "n_scaling": res_n
     }
-    with open("benchmark_results.json", "w", encoding="utf-8") as f:
+    json_path = os.path.join(SCRIPT_DIR, "benchmark_results.json")
+    with open(json_path, "w", encoding="utf-8") as f:
         json.dump(benchmarks, f, indent=2)
 
     # 4. Generate runtime vs k plot
@@ -401,6 +411,7 @@ def main():
     pts_mc_k = [(d["k"], d["counter_ms"]) for d in res_k]
     max_t_k = max(d["full_sort_ms"] for d in res_k) * 1.3
 
+    k_plot_path = os.path.join(SCRIPT_DIR, "runtime_vs_k.svg")
     generate_line_plot(
         title="Runtime vs. k (Top-k Selection, N = 50,000, M = 1,614)",
         x_label="Number of Top Words (k)",
@@ -412,7 +423,7 @@ def main():
         ],
         x_max=max(d["k"] for d in res_k),
         y_max=max_t_k,
-        filename="runtime_vs_k.svg"
+        filename=k_plot_path
     )
 
     # 5. Generate runtime vs N plot
@@ -421,6 +432,7 @@ def main():
     pts_bucket_n = [(d["n"], d["bucket_ms"]) for d in res_n]
     max_t_n = max(d["full_sort_ms"] for d in res_n) * 1.25
 
+    n_plot_path = os.path.join(SCRIPT_DIR, "runtime_vs_n.svg")
     generate_line_plot(
         title="Runtime vs. Text Length N (Fixed k = 20)",
         x_label="Corpus Size (N words)",
@@ -432,11 +444,12 @@ def main():
         ],
         x_max=max(d["n"] for d in res_n),
         y_max=max_t_n,
-        filename="runtime_vs_n.svg"
+        filename=n_plot_path
     )
 
     # 6. Generate Zipf distribution plot
-    generate_zipf_plot_svg(Counter(tokens), filename="zipf_distribution.svg")
+    zipf_path = os.path.join(SCRIPT_DIR, "zipf_distribution.svg")
+    generate_zipf_plot_svg(Counter(tokens), filename=zipf_path)
 
     print("\nAll Project 3 benchmarks and plots completed successfully!")
 

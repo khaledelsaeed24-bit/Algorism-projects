@@ -1,0 +1,159 @@
+[
+  {
+    "start": "lead",
+    "target": "gold",
+    "label": "Lead to Gold",
+    "path": [
+      "lead",
+      "load",
+      "goad",
+      "gold"
+    ],
+    "length": 4,
+    "transformations": 3,
+    "bfs_nodes": 72,
+    "bi_nodes": 5,
+    "pruning_pct": 93.06,
+    "bfs_time_ms": 4.768,
+    "bi_time_ms": 0.883
+  },
+  {
+    "start": "cold",
+    "target": "warm",
+    "label": "Cold to Warm",
+    "path": [
+      "cold",
+      "cord",
+      "word",
+      "ward",
+      "warm"
+    ],
+    "length": 5,
+    "transformations": 4,
+    "bfs_nodes": 226,
+    "bi_nodes": 10,
+    "pruning_pct": 95.58,
+    "bfs_time_ms": 9.305,
+    "bi_time_ms": 0.411
+  },
+  {
+    "start": "cat",
+    "target": "dog",
+    "label": "Cat to Dog",
+    "path": [
+      "cat",
+      "cot",
+      "dot",
+      "dog"
+    ],
+    "length": 4,
+    "transformations": 3,
+    "bfs_nodes": 238,
+    "bi_nodes": 4,
+    "pruning_pct": 98.32,
+    "bfs_time_ms": 3.805,
+    "bi_time_ms": 0.1
+  },
+  {
+    "start": "head",
+    "target": "tail",
+    "label": "Head to Tail",
+    "path": [
+      "head",
+      "held",
+      "hell",
+      "tell",
+      "tall",
+      "tail"
+    ],
+    "length": 6,
+    "transformations": 5,
+    "bfs_nodes": 309,
+    "bi_nodes": 26,
+    "pruning_pct": 91.59,
+    "bfs_time_ms": 5.999,
+    "bi_time_ms": 0.609
+  },
+  {
+    "start": "fool",
+    "target": "sage",
+    "label": "Fool to Sage",
+    "path": [
+      "fool",
+      "pool",
+      "poll",
+      "pole",
+      "sole",
+      "sale",
+      "sage"
+    ],
+    "length": 7,
+    "transformations": 6,
+    "bfs_nodes": 399,
+    "bi_nodes": 52,
+    "pruning_pct": 86.97,
+    "bfs_time_ms": 7.506,
+    "bi_time_ms": 1.076
+  },
+  {
+    "start": "hate",
+    "target": "love",
+    "label": "Hate to Love",
+    "path": [
+      "hate",
+      "late",
+      "lane",
+      "lone",
+      "love"
+    ],
+    "length": 5,
+    "transformations": 4,
+    "bfs_nodes": 145,
+    "bi_nodes": 8,
+    "pruning_pct": 94.48,
+    "bfs_time_ms": 3.731,
+    "bi_time_ms": 0.531
+  },
+  {
+    "start": "fire",
+    "target": "cold",
+    "label": "Fire to Cold",
+    "path": [
+      "fire",
+      "tire",
+      "tore",
+      "core",
+      "cord",
+      "cold"
+    ],
+    "length": 6,
+    "transformations": 5,
+    "bfs_nodes": 270,
+    "bi_nodes": 15,
+    "pruning_pct": 94.44,
+    "bfs_time_ms": 7.64,
+    "bi_time_ms": 0.328
+  },
+  {
+    "start": "beer",
+    "target": "wine",
+    "label": "Beer to Wine",
+    "path": [
+      "beer",
+      "bear",
+      "beat",
+      "bent",
+      "bend",
+      "bind",
+      "wind",
+      "wine"
+    ],
+    "length": 8,
+    "transformations": 7,
+    "bfs_nodes": 391,
+    "bi_nodes": 94,
+    "pruning_pct": 75.96,
+    "bfs_time_ms": 7.714,
+    "bi_time_ms": 2.951
+  }
+]
